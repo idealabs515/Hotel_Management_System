@@ -102,7 +102,25 @@ public class Hotel {
 
 	
 	public void checkin(long confirmationNumber) {
-		// TODO Auto-generated method stub
+		/*// TODO Auto-generated method stub
+		confirmationNumber was looked in the hashmap called bookingByConfirmationNumber.
+		If key matches confirmation number then the Booking object is extracted from Map.
+		Room id is extracted from the Booking object and the values are stored
+		in a hashmap that take roomId as key and Booking object as value called 
+		activeBookingsByRoomId. The status of booking was changed by calling booking.checkIn().
+		If confirmationNumber does not match then a RuntimeException is thrown with message
+		regarding "Booking not found." error message. 
+		*/
+		if(bookingByConfirmationNumber.containsKey(confirmationNumber)){
+			Booking booking = bookingByConfirmationNumber.key(confirmationNumber);
+			int roomId = booking.getRoomID();
+			booking.checkIn();
+			activeBookingsByRoomId.put(roomId, booking);
+		}
+		else{
+			RuntimeException bookingNotFound = new RuntimeException("Booking not found");
+			throw bookingNotFound;
+		}
 	}
 
 
