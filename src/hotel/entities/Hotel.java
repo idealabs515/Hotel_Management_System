@@ -91,9 +91,12 @@ public class Hotel {
 		/*// TODO Auto-generated method stub
 		Booking object was created using the parameter provided using room.book() method.
 		The confirmation number was generated using the booking.getConfirmationNumber() method.
+		Once Booking object and confirmation number is generated, the values are sotred in 
+		bookingByConfirmationNumber
 		*/
 		Booking booking = room.book(guest,arrivalDate,stayLength, occupantNumber,creditCard);
 		long confirmationNumber = booking.getConfirmationNumber();
+		bookingsByConfirmationNumber.put(confirmationNumber, booking);
 		return confirmationNumber;		
 	}
 
