@@ -117,7 +117,7 @@ public class Hotel {
 			booking.checkIn();
 			activeBookingsByRoomId.put(roomId, booking);
 		}
-		else{
+		else {
 			RuntimeException bookingNotFound = new RuntimeException("Booking not found");
 			throw bookingNotFound;
 		}
@@ -125,7 +125,19 @@ public class Hotel {
 
 
 	public void addServiceCharge(int roomId, ServiceType serviceType, double cost) {
-		// TODO Auto-generated method stub
+		/*// TODO Auto-generated method stub
+		roomId was used to check whether the booking information is available in 
+		activeBookingsByRoomId. and if found the booking object is created and the 
+		addServiceCharge method is called. If not found the runtime exception is called.
+		*/
+		if(activeBookingsByRoomId.containsKey(roomId)){
+			Booking booking = activeBookingsByRoomId.key(roomId);
+			booking.addServiceCharge(serviceType, cost);
+		}
+		else {
+			RuntimeException bookingNotFound = new RuntimeException("Booking not found");
+			throw bookingNotFound;
+		}
 	}
 
 	
