@@ -142,7 +142,22 @@ public class Hotel {
 
 	
 	public void checkout(int roomId) {
-		// TODO Auto-generated method stub
+		/*/ TODO Auto-generated method stub
+		roomId was used to check whether the booking information is available in 
+		activeBookingsByRoomId. and if found the booking object is created and the 
+		booking.checkOut() method is called. 
+		After that the data stored in the activeBookingsByRoomId is removed.
+		If not found the runtime exception is called.
+		*/
+		if(activeBookingsByRoomId.containsKey(roomId)){
+			Booking booking = activeBookingsByRoomId.key(roomId);
+			booking.checkOut();
+			activeBookingsByRoomId.remove(roomId);
+		}
+		else {
+			RuntimeException bookingNotFound = new RuntimeException("Booking not found");
+			throw bookingNotFound;
+		}
 	}
 
 
