@@ -7,6 +7,7 @@ import java.util.Date;
 import hotel.credit.CreditAuthorizer;
 import hotel.credit.CreditCard;
 import hotel.credit.CreditCardType;
+import hotel.entities.Booking; // For creating booking.
 import hotel.entities.Guest;
 import hotel.entities.Hotel;
 import hotel.entities.Room;
@@ -20,6 +21,7 @@ public class BookingCTL {
 	
 	private BookingUI bookingUI;
 	private Hotel hotel;
+	private Booking booking;
 
 	private Guest guest;
 	private Room room;
@@ -137,7 +139,46 @@ public class BookingCTL {
 
 
 	public void creditDetailsEntered(CreditCardType type, int number, int ccv) {
-		// TODO Auto-generated method stub
+		/*// TODO Auto-generated method stub
+		This control method checks whether the arguments provided can be used to 
+		authorise the Credit card using CreditAuthorizer.authorize() method.
+		If it return false then it throw RuntimeException. If it return true then the
+		state is changed to approved and a new Booking object is created.
+		After creating an object, its method is used to generate data and is passed to
+		bookingUI.displayConfirmedBooking which shows the message to Guest and 
+		the state of the bookingUI is set to COMPLETED and so to the state of BookingCTL.
+		*/
+
+		if (state != State.CREDIT) {
+			String mesg = String.format("BookingCTL: creditDetailsEntered : bad state : %s", state);
+			throw new RuntimeException(mesg);
+		}
+		CreditCard creditCard = new CreditCard(type,number,ccv);
+		CreditAuthorizer creditAuthorizer = new CreditAuthorizer();
+		if(!(creditAuthorizer.authorize(creditCard, cost))){
+			String mesg = String.format("%s Credit card number %d was not authorized for $%.2f", creditCard.getVendor(),number,cost);
+			throw new RuntimeException(mesg);
+		}
+		else {
+			state = State.APPROVED;
+			String roomDecription = selectedRoomType.getDescription();
+			int roomNumber = room.getId();
+			String guestName = guest.getName();
+			String creditCardVendor = creditCard.getVendor();
+			booking = new Booking(guest, room, 
+			arrivalDate, stayLength, 
+			occupantNumber, creditCard);
+
+			long confirmationNumber = booking.getConfirmationNumber();
+
+			bookingUI.displayConfirmedBooking(roomDecription, roomNumber,
+			arrivalDate, stayLength, 
+			guestName, creditCardVendor, number, 
+			cost, confirmationNumber);
+			bookingUI.setState(BookingUI.State.COMPLETED);
+			state = State.COMPLETED;
+		}
+
 	}
 
 
