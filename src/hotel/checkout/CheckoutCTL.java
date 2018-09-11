@@ -104,6 +104,9 @@ public class CheckoutCTL {
 		// TODO Auto-generated method stub
 	}
 
+	public CreditCard getCreditCard() {
+		return creditCard;
+	}
 
 	public void cancel() {
 		checkoutUI.displayMessage("Checking out cancelled");
@@ -116,6 +119,7 @@ public class CheckoutCTL {
 		checkoutUI.displayMessage("Checking out completed");
 	}
 
+	
 
 
 }
