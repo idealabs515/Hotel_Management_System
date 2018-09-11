@@ -114,8 +114,13 @@ public class Hotel {
 	}
 
 
-	public void addServiceCharge(int roomId, ServiceType serviceType, double cost) {
-		// TODO Auto-generated method stub
+	public void addServiceCharge(int roomId, ServiceType serviceType, double cost) {		
+		Booking booking = activeBookingsByRoomId.get(roomId);
+		
+		if (booking == null) {
+			throw new RuntimeException("No active booking for room");
+		}
+		booking.addServiceCharge(serviceType, cost);
 	}
 
 	
