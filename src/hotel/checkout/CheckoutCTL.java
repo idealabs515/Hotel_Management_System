@@ -101,7 +101,7 @@ public class CheckoutCTL {
 
 	
 	public void creditDetailsEntered(CreditCardType type, int number, int ccv) {
-		// TODO Auto-generated method stub
+		creditCard = new CreditCard(type, number, ccv);
 	}
 
 	public CreditCard getCreditCard() {
