@@ -21,6 +21,9 @@ public class CheckoutCTL {
 	private CheckoutUI checkoutUI;
 	private double total;
 	private int roomId;
+	
+	//added creditCard variable
+	private CreditCard creditCard;
 
 
 	public CheckoutCTL(Hotel hotel) {
