@@ -97,7 +97,21 @@ public class CheckoutCTL {
 
 	
 	public void creditDetailsEntered(CreditCardType type, int number, int ccv) {
-		// TODO Auto-generated method stub
+		if (state != State.CREDIT) {
+			throw new RuntimeException("Not in CREDIT state");
+		}
+		
+		CreditCard creditCard = new CreditCard(type, number, ccv);
+		
+		if (CreditAuthorizer.getInstance().authorize(creditCard, total)) {
+			hotel.checkout(roomId);
+			checkoutUI.displayMessage("Credit card debited");
+			state = State.COMPLETED;
+			checkoutUI.setState(CheckoutUI.State.COMPLETED);
+		} else {
+			checkoutUI.displayMessage("Credit not approved");
+		}
+		
 	}
 
 
