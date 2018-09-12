@@ -21,10 +21,6 @@ public class CheckoutCTL {
 	private CheckoutUI checkoutUI;
 	private double total;
 	private int roomId;
-	
-	//added creditCard variable
-	private CreditCard creditCard;
-
 
 	public CheckoutCTL(Hotel hotel) {
 		this.hotel = hotel;
@@ -101,12 +97,9 @@ public class CheckoutCTL {
 
 	
 	public void creditDetailsEntered(CreditCardType type, int number, int ccv) {
-		creditCard = new CreditCard(type, number, ccv);
+		// TODO Auto-generated method stub
 	}
 
-	public CreditCard getCreditCard() {
-		return creditCard;
-	}
 
 	public void cancel() {
 		checkoutUI.displayMessage("Checking out cancelled");
