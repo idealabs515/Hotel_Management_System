@@ -140,7 +140,7 @@ public class Booking {
 		}
 		else
 		{
-			throws new RuntimeExcepton;
+			throw new RuntimeException();
 		}
 	}
 
@@ -148,11 +148,11 @@ public class Booking {
 	public void addServiceCharge(ServiceType serviceType, double cost) {
 			if(isCheckedIn())
 		{	
-			charges.add(new ServiceCharge(serviceType,cost))
+			charges.add(new ServiceCharge(serviceType,cost));
 		}
 		else
 		{
-			throws new RuntimeExcepton;
+			throw new RuntimeException();
 		}
 	}
 
@@ -160,12 +160,14 @@ public class Booking {
 	public void checkOut() {
 		if(isCheckedIn())
 		{
-		room.checkout(booking);
-		state = State.CHECKED_OUT;
+			Booking booking = new Booking( guest,  room,bookedArrival,
+					stayLength, numberOfOccupants, creditCard);
+			room.checkout(booking);
+			state = State.CHECKED_OUT;
 		}
 		else
 		{
-			throws new RuntimeExcepton;
+			throw new RuntimeException();
 		}
 	}
 
