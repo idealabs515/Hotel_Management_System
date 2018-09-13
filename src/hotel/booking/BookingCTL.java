@@ -161,7 +161,7 @@ public class BookingCTL {
 			
 			long confirmationNumber = hotel.book(room, guest, 
 				arrivalDate, stayLength, occupantNumber,
-				creditCard)
+				creditCard);
 
 			bookingUI.displayConfirmedBooking(roomDecription, roomNumber,
 				arrivalDate, stayLength, guestName, creditCardVendor, 
