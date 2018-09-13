@@ -80,7 +80,21 @@ public class CheckinCTL {
 
 	
 	public void checkInConfirmed(boolean confirmed) {
-		// TODO Auto-generated method stub
+		try {
+			if(confirmed) {
+				hotel.checkin(this.confirmationNumber);
+				checkInUI.displayMessage("Checkin Confirmed for: " + this.confirmationNumber);
+				state = State.COMPLETED;
+				checkInUI.setState(CheckinUI.State.COMPLETED);
+			}
+			else {
+				checkInUI.displayMessage("Checkin Not Confirmed");
+				this.cancel();
+			}
+		}
+		catch(Exception e) {
+			
+		}
 	}
 
 

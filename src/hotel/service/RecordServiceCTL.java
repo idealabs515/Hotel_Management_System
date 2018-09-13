@@ -49,7 +49,18 @@ public class RecordServiceCTL {
 	
 	
 	public void serviceDetailsEntered(ServiceType serviceType, double cost) {
-		// TODO Auto-generated method stub
+		String mesg = String.format("PayForServiceCTL: not in service: %s", state);
+		if (state != State.SERVICE) {
+			
+			throw new RuntimeException(mesg);
+		}
+		else
+		{
+			hotel.addServiceCharge(roomNumber, serviceType, cost);
+			recordServiceUI.displayServiceChargeMessage(roomNumber, cost, mesg);
+			state = State.COMPLETED;
+			recordServiceUI.setState(RecordServiceUI.State.COMPLETED);
+		}
 	}
 
 
