@@ -60,19 +60,32 @@ public class Room {
 
 
 	public Booking book(Guest guest, Date arrivalDate, int stayLength, int numberOfOccupants, CreditCard creditCard) {
-			
 		Booking newBooking = new Booking(guest, this, arrivalDate, stayLength, numberOfOccupants, creditCard);
-		return newBooking;		
+		return newBooking;	
+			
 	}
 
 
 	public void checkin() {
-		// TODO Auto-generated method stub
+		
+		if(!isReady()) {
+			
+			throw new RuntimeException("Room is not Ready yet. ");
+		}
+		else {
+			state = State.OCCUPIED;
+		}
 	}
 
 
 	public void checkout(Booking booking) {
-		// TODO Auto-generated method stub
+		if(isReady()) {
+			throw new RuntimeException("Room is not Ready yet. ");
+		}
+		else {
+			bookings.remove(booking);
+			state = State.READY;
+		}
 	}
 
 
