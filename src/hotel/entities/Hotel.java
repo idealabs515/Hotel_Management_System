@@ -85,34 +85,34 @@ public class Hotel {
 	}
 
 	
+	/*
+	Booking object was created using the parameter provided using room.book() method.
+	The confirmation number was generated using the booking.getConfirmationNumber() method.
+	Once Booking object and confirmation number is generated, the values are sotred in 
+	bookingByConfirmationNumber
+	*/	
 	public long book(Room room, Guest guest, 
 			Date arrivalDate, int stayLength, int occupantNumber,
 			CreditCard creditCard) {
-		/*// TODO Auto-generated method stub
-		Booking object was created using the parameter provided using room.book() method.
-		The confirmation number was generated using the booking.getConfirmationNumber() method.
-		Once Booking object and confirmation number is generated, the values are sotred in 
-		bookingByConfirmationNumber
-		*/
 		Booking booking = room.book(guest,arrivalDate,stayLength, occupantNumber,creditCard);
 		long confirmationNumber = booking.getConfirmationNumber();
 		bookingsByConfirmationNumber.put(confirmationNumber, booking);
 		return confirmationNumber;		
 	}
 
-	
+
+	/*
+	confirmationNumber was looked in the hashmap called bookingByConfirmationNumber.
+	If key matches confirmation number then the Booking object is extracted from Map.
+	Room id is extracted from the Booking object and the values are stored
+	in a hashmap that take roomId as key and Booking object as value called 
+	activeBookingsByRoomId. The status of booking was changed by calling booking.checkIn().
+	If confirmationNumber does not match then a RuntimeException is thrown with message
+	regarding "Booking not found." error message. 
+	*/
 	public void checkin(long confirmationNumber) {
-		/*// TODO Auto-generated method stub
-		confirmationNumber was looked in the hashmap called bookingByConfirmationNumber.
-		If key matches confirmation number then the Booking object is extracted from Map.
-		Room id is extracted from the Booking object and the values are stored
-		in a hashmap that take roomId as key and Booking object as value called 
-		activeBookingsByRoomId. The status of booking was changed by calling booking.checkIn().
-		If confirmationNumber does not match then a RuntimeException is thrown with message
-		regarding "Booking not found." error message. 
-		*/
-		if(bookingByConfirmationNumber.containsKey(confirmationNumber)){
-			Booking booking = bookingByConfirmationNumber.key(confirmationNumber);
+		if(bookingsByConfirmationNumber.containsKey(confirmationNumber)){
+			Booking booking = bookingsByConfirmationNumber.get(confirmationNumber);
 			int roomId = booking.getRoomID();
 			booking.checkIn();
 			activeBookingsByRoomId.put(roomId, booking);
@@ -124,14 +124,14 @@ public class Hotel {
 	}
 
 
+	/*
+	roomId was used to check whether the booking information is available in 
+	activeBookingsByRoomId. and if found the booking object is created and the 
+	addServiceCharge method is called. If not found the runtime exception is called.
+	*/
 	public void addServiceCharge(int roomId, ServiceType serviceType, double cost) {
-		/*// TODO Auto-generated method stub
-		roomId was used to check whether the booking information is available in 
-		activeBookingsByRoomId. and if found the booking object is created and the 
-		addServiceCharge method is called. If not found the runtime exception is called.
-		*/
 		if(activeBookingsByRoomId.containsKey(roomId)){
-			Booking booking = activeBookingsByRoomId.key(roomId);
+			Booking booking = activeBookingsByRoomId.get(roomId);
 			booking.addServiceCharge(serviceType, cost);
 		}
 		else {
@@ -140,15 +140,15 @@ public class Hotel {
 		}
 	}
 
-	
+
+	/*
+	roomId was used to check whether the booking information is available in 
+	activeBookingsByRoomId. and if found the booking object is created and the 
+	booking.checkOut() method is called. 
+	After that the data stored in the activeBookingsByRoomId is removed.
+	If not found the runtime exception is called.
+	*/	
 	public void checkout(int roomId) {
-		/*/ TODO Auto-generated method stub
-		roomId was used to check whether the booking information is available in 
-		activeBookingsByRoomId. and if found the booking object is created and the 
-		booking.checkOut() method is called. 
-		After that the data stored in the activeBookingsByRoomId is removed.
-		If not found the runtime exception is called.
-		*/
 		if(activeBookingsByRoomId.containsKey(roomId)){
 			Booking booking = activeBookingsByRoomId.key(roomId);
 			booking.checkOut();
