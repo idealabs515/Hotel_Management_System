@@ -7,7 +7,6 @@ import java.util.Date;
 import hotel.credit.CreditAuthorizer;
 import hotel.credit.CreditCard;
 import hotel.credit.CreditCardType;
-import hotel.entities.Booking; // For creating booking.
 import hotel.entities.Guest;
 import hotel.entities.Hotel;
 import hotel.entities.Room;
@@ -21,7 +20,6 @@ public class BookingCTL {
 	
 	private BookingUI bookingUI;
 	private Hotel hotel;
-	private Booking booking;
 
 	private Guest guest;
 	private Room room;
