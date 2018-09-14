@@ -91,9 +91,12 @@ public class Hotel {
 		
 		if (room.isAvailable(arrivalDate, stayLength)) {
 			Booking booking = room.book(guest, arrivalDate, stayLength, occupantNumber, creditCard);
-			long confirmationNumber = booking.getConfirmationNumber();
-			bookingsByConfirmationNumber.put(confirmationNumber, booking);
-			return confirmationNumber;
+			if (booking != null) {
+				long confirmationNumber = booking.getConfirmationNumber();
+				bookingsByConfirmationNumber.put(confirmationNumber, booking);
+				return confirmationNumber; 
+			} else 
+				return 0L;
 		}
 		
 		return 0L;	
