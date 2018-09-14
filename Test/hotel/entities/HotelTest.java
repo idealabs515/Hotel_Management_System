@@ -143,4 +143,58 @@ public class HotelTest {
         assertEquals(false, roomAvailable);
     }
 
+    
+    /* checkin() method is suppose to throw RuntimeException when there is no booking with provided
+    confirmationNumber. This test make sure that it throws RuntimeException by proving fake number.
+     */
+    @Test(expected = RuntimeException.class)    //Assert
+    public void testCheckinNoBooking() {
+        //Arrange
+        long randomConfirmationNumber = 123456L;
+
+        //Act
+        hotel.checkin(randomConfirmationNumber);
+    }
+
+
+    /*
+    checkin() method should put the booking detail with room id in activebookings hashmap. This test
+    check whether the Booking object generated can be find by using findActiveBookingByRoomId() method.
+     */
+    @Test
+    public void testCheckinBookingExist() {
+        //Arrange
+        long confirmationNumber = hotel.book(room, guest, date, stayLength, occupantNumber, card);
+        hotel.checkin(confirmationNumber);
+        int roomId = room.getId();
+
+        //Act
+        boolean bookingExist = (hotel.findActiveBookingByRoomId(roomId)!=null);
+
+        //Assert
+        assertEquals(true,bookingExist);
+
+    }
+
+
+    /*
+    checkin() method should update booking state after calling checkin(). This test check whether the
+    state of booking is changed to Checked in
+     */
+    @Test
+    public void testCheckinStateIsChanged() {
+        //Arrange
+        long confirmationNumber = hotel.book(room, guest, date, stayLength, occupantNumber, card);
+        hotel.checkin(confirmationNumber);
+        int roomId = room.getId();
+        booking  = hotel.findActiveBookingByRoomId(roomId);
+
+        //Act
+        boolean checkInState  = booking.isCheckedIn();
+
+        //Assert
+        assertEquals(true,checkInState);
+
+    }
+
 }
