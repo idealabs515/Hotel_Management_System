@@ -113,7 +113,7 @@ public class Hotel {
 	public void checkin(long confirmationNumber) {
 		if(bookingsByConfirmationNumber.containsKey(confirmationNumber)){
 			Booking booking = bookingsByConfirmationNumber.get(confirmationNumber);
-			int roomId = booking.getRoomID();
+			int roomId = booking.getRoomId();
 			booking.checkIn();
 			activeBookingsByRoomId.put(roomId, booking);
 		}
@@ -150,7 +150,7 @@ public class Hotel {
 	*/	
 	public void checkout(int roomId) {
 		if(activeBookingsByRoomId.containsKey(roomId)){
-			Booking booking = activeBookingsByRoomId.key(roomId);
+			Booking booking = activeBookingsByRoomId.get(roomId);
 			booking.checkOut();
 			activeBookingsByRoomId.remove(roomId);
 		}
