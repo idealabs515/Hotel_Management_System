@@ -53,6 +53,7 @@ import static org.junit.Assert.*;
  *      => testCheckoutCheckedOut()
  * */
 
+
 public class HotelTest {
 
     Hotel hotel;
@@ -67,6 +68,12 @@ public class HotelTest {
     public Map<Integer, Booking> activeBookingsByRoomId;
 
 
+    /*
+    All the variables that is created in the before seems to be used frequently
+    by all the methods to function. So, instead of writing the same code again
+    and again, it is being provided as a default items to be crated before any
+    test case is conducted.
+     */
     @Before
     public void setUp() throws Exception {
         bookingsByConfirmationNumber = new HashMap<>();
@@ -79,8 +86,6 @@ public class HotelTest {
         occupantNumber = 2;
 
         hotel = new Hotel();
-        hotel.addRoom(RoomType.SINGLE, 101);
-        hotel.addRoom(RoomType.DOUBLE, 201);
         hotel.addRoom(RoomType.TWIN_SHARE, 301);
 
         guest = new Guest("Ramesh", "Nurke", 2);
@@ -91,6 +96,10 @@ public class HotelTest {
     }
 
 
+    /*
+    All the information that was generated after test is reset to null or 0 as
+    suitable for object type to eliminate any tampering the preceding test.
+     */
     @After
     public void tearDown() {
         hotel = null;
@@ -105,45 +114,55 @@ public class HotelTest {
         occupantNumber = 0;
     }
 
+
     /*book() method need to return the confirmation in the format of DDMMYYYYroomId
     This method test whether the number being returned follow this given criteria.
     */
     @Test
     public void testBookConfirmationNumberIsReturned() {
-
+        //Arrange
         long expectedConfirmationNumber = 25102018301L;
 
+        //Act
         long confirmationNumber = hotel.book(room, guest, date, stayLength, occupantNumber, card);
 
+        //Assert
         assertEquals(expectedConfirmationNumber, confirmationNumber);
     }
+
 
     /*book() method should update the hashmap that contain confirmationNumber and booking information.
     This test test whether the value that this method is suppose to add is there in the hashmap.
     */
     @Test
     public void testBookBookingExist() {
+        //Arrange
         long confirmationNumber = hotel.book(room, guest, date, stayLength, occupantNumber, card);
 
-
+        //Act
         boolean bookingExist = (hotel.findBookingByConfirmationNumber(confirmationNumber) != null);
 
+        //Assert
         assertEquals(true, bookingExist);
     }
+
 
     /*book() method should call the room.book() to make sure that the room is made unavailable for the
     booking time period. This test test whether that is the case.
     */
     @Test
     public void testBookRoomIsUnavailable() {
+        //Arrange
         long confirmationNumber = hotel.book(room, guest, date, stayLength, occupantNumber, card);
 
+        //Act
         boolean roomAvailable = room.isAvailable(date, stayLength);
 
+        //Assert
         assertEquals(false, roomAvailable);
     }
 
-    
+
     /* checkin() method is suppose to throw RuntimeException when there is no booking with provided
     confirmationNumber. This test make sure that it throws RuntimeException by proving fake number.
      */
@@ -173,7 +192,6 @@ public class HotelTest {
 
         //Assert
         assertEquals(true,bookingExist);
-
     }
 
 
@@ -194,7 +212,40 @@ public class HotelTest {
 
         //Assert
         assertEquals(true,checkInState);
+    }
 
+
+    /*
+    addServiceCharge() method is suppose to throw RuntimeException when booking is not found for
+    given room number. This test is to verify that behaviour.
+     */
+    @Test(expected = RuntimeException.class)        //Assert
+    public void testAddServiceChargeNoBookingForRoom() {
+        //Arrange
+        int notRoomId = 505;
+
+        //Act
+        hotel.addServiceCharge(notRoomId,ServiceType.ROOM_SERVICE, 10);
+    }
+
+
+    /*
+    addServiceCharge() method adds service charge to booking. This test verify whether this
+    behaviour can be seen.
+     */
+    @Test
+    public void testAddServiceChargeToActiveBooking() {
+        //Arrange
+        long confirmationNumber = hotel.book(room, guest, date, stayLength, occupantNumber, card);
+        hotel.checkin(confirmationNumber);
+        hotel.addServiceCharge(room.getId(),ServiceType.ROOM_SERVICE, 12);
+        booking  = hotel.findActiveBookingByRoomId(room.getId());
+
+        //Act
+        boolean isCharged = (booking.getCharges()!=null);
+
+        //Assert
+        assertEquals(true,isCharged);
     }
 
 }
