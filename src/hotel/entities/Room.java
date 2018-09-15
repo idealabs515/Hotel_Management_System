@@ -61,6 +61,7 @@ public class Room {
 
 	public Booking book(Guest guest, Date arrivalDate, int stayLength, int numberOfOccupants, CreditCard creditCard) {
 		Booking newBooking = new Booking(guest, this, arrivalDate, stayLength, numberOfOccupants, creditCard);
+		bookings.add(newBooking);
 		return newBooking;	
 			
 	}
