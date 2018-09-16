@@ -15,7 +15,9 @@ import hotel.entities.Booking;
 import hotel.entities.Guest;
 import hotel.entities.Hotel;
 import hotel.entities.Room;
-import hotel.entities.RoomType; 
+import hotel.entities.RoomType;
+import hotel.entities.ServiceCharge;
+import hotel.entities.ServiceType; 
 
 public class HotelTest {
 	
@@ -76,7 +78,21 @@ public class HotelTest {
 	
 	@Test 
     public void testAddServiceCharge() { 
-
+		long confirmationNumber = hotel.book(room, guest, date, stayLength, 1, card);
+		hotel.checkin(confirmationNumber);
+		hotel.addServiceCharge(room.getId(), ServiceType.BAR_FRIDGE, 20.00);
+		
+		Booking booking = hotel.findActiveBookingByRoomId(room.getId());
+		
+		boolean isServicedded = false;
+		for (ServiceCharge serviceCharge : booking.getCharges()) {
+			if (serviceCharge.getType() == ServiceType.BAR_FRIDGE) {
+				isServicedded = true;
+				break;
+			}
+		}
+		
+		assertEquals(isServicedded, true);
 	}
 	
 	@Test 
