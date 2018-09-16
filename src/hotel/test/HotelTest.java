@@ -1,5 +1,7 @@
 package hotel.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -45,7 +47,15 @@ public class HotelTest {
 	
 	@Test 
     public void testBook() throws Exception { 
-
+		long confirmationNumber = hotel.book(room, guest, date, stayLength, 1, card);
+		long expectedConfirmationNumber = 1012019101L; //01012019101 for ddMMyyyyXXX
+		assertEquals(expectedConfirmationNumber, confirmationNumber);
+		
+		boolean bookingExist = (hotel.findBookingByConfirmationNumber(confirmationNumber) != null);
+		assertEquals(bookingExist, true);
+		
+		boolean roomNotAvailable = room.isAvailable(date, stayLength);
+		assertEquals(roomNotAvailable, false);
 	}
 	
 	@Test 
