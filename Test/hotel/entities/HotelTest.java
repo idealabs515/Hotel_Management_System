@@ -248,4 +248,37 @@ public class HotelTest {
         assertEquals(true,isCharged);
     }
 
+
+    /*
+    checkOut() method throws RuntimeException when there is no booking with given room no.
+     */
+    @Test(expected = RuntimeException.class)    //Assert
+    public void testCheckOutNoBookingForRoom() {
+        //Arrange
+        int randomRoom = 505;
+
+        //Act
+        hotel.checkout(randomRoom);
+    }
+
+
+    /*
+    checkOut() method should change the state of booking to checked out. This test verify whether
+    this has been carried out.
+     */
+    @Test
+    public void testCheckoutCheckedOut() {
+        //Arrange
+        long confirmationNumber = hotel.book(room, guest, date, stayLength, occupantNumber, card);
+        hotel.checkin(confirmationNumber);
+        int roomId = room.getId();
+        booking  = hotel.findActiveBookingByRoomId(roomId);
+        hotel.checkout(roomId);
+
+        //Act
+        boolean isCheckedOut = booking.isCheckedOut();
+
+        //Assert
+        assertEquals(true, isCheckedOut);
+    }
 }
