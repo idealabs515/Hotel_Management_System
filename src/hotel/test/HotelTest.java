@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import hotel.credit.CreditCard;
 import hotel.credit.CreditCardType;
+import hotel.entities.Booking;
 import hotel.entities.Guest;
 import hotel.entities.Hotel;
 import hotel.entities.Room;
@@ -60,7 +61,17 @@ public class HotelTest {
 	
 	@Test 
     public void testCheckin() { 
-
+		long confirmationNumber = hotel.book(room, guest, date, stayLength, 1, card);
+		
+		hotel.checkin(confirmationNumber);
+		
+		Booking booking = hotel.findActiveBookingByRoomId(room.getId());
+		
+		boolean bookingExist = (booking != null);
+		assertEquals(bookingExist, true);
+		
+		boolean isCheckedIn = (booking.isCheckedIn());
+		assertEquals(isCheckedIn, true);
 	}
 	
 	@Test 
