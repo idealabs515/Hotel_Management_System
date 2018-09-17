@@ -97,7 +97,13 @@ public class HotelTest {
 	
 	@Test 
     public void testCheckout() { 
-
+		long confirmationNumber = hotel.book(room, guest, date, stayLength, 1, card);
+		hotel.checkin(confirmationNumber);
+		hotel.checkout(room.getId());
+		
+		Booking booking = hotel.findBookingByConfirmationNumber(confirmationNumber);
+		boolean isCheckedOut = (booking.isCheckedOut());
+		assertEquals(isCheckedOut, true);	
 	}
 	
 	@Test(expected = RuntimeException.class)
