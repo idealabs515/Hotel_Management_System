@@ -108,7 +108,7 @@ public class HotelTest {
 	
 	@Test(expected = RuntimeException.class)
     public void testCheckinNoBooking() { 
-
+		hotel.checkin(1);
 	}
 	
 	@Test(expected = RuntimeException.class)
