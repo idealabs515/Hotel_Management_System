@@ -113,7 +113,7 @@ public class HotelTest {
 	
 	@Test(expected = RuntimeException.class)
     public void testAddServiceChargeNotCheckedIn() { 
-
+		hotel.addServiceCharge(1, ServiceType.RESTAURANT, 10);
 	}
 	
 	@Test(expected = RuntimeException.class)
