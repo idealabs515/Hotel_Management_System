@@ -118,6 +118,6 @@ public class HotelTest {
 	
 	@Test(expected = RuntimeException.class)
     public void testCheckoutNotCheckedIn() { 
-
+		hotel.checkout(1);
 	}
 }
