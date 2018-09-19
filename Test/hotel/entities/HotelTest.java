@@ -14,7 +14,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * This is the Unit test of the Hotel entities. All the test has been
+ * Author: Bikram Shrestha
+ *         11645312
+ *         ITC515 Professional Programming Practices
+ *         Assessment 3
+ * This is the Integration test of the Hotel entities. All the test has been
  * sub divided for clarity of the code and expected result.
  * This test include test of following methods:
  *
@@ -153,7 +157,7 @@ public class HotelTest {
     @Test
     public void testBookRoomIsUnavailable() {
         //Arrange
-        long confirmationNumber = hotel.book(room, guest, date, stayLength, occupantNumber, card);
+        hotel.book(room, guest, date, stayLength, occupantNumber, card);
 
         //Act
         boolean roomAvailable = room.isAvailable(date, stayLength);

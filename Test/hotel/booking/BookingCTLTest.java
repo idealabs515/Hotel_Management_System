@@ -15,6 +15,10 @@ import static org.junit.Assert.assertTrue;
 
 
 /*
+ * Author: Bikram Shrestha
+ *         11645312
+ *         ITC515 Professional Programming Practices
+ *         Assessment 3
 * This is a Integration testing for the BookingCTL. In this test, following
 * criteria are being tested.
 * - creditDetailsEntered()
