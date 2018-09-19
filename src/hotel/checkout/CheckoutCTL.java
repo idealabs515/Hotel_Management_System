@@ -127,6 +127,9 @@ public class CheckoutCTL {
 	}
 
 	
-
+	public void setStateToRoom() {
+		checkoutUI.displayMessage("Setting state to ROOM for integration testing");
+		state = State.ROOM;
+	}
 
 }
