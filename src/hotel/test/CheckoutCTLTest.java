@@ -49,7 +49,13 @@ public class CheckoutCTLTest {
 	
 	@Test 
     public void testCreditDetailsEntered() throws Exception { 
-
+		checkoutCTL.setStateToRoom();
+		long confirmationNumber = hotel.book(room, guest, date, stayLength, 1, card);
+		hotel.checkin(confirmationNumber);
+		checkoutCTL.roomIdEntered(room.getId());
+		checkoutCTL.chargesAccepted(true);
+		
+		checkoutCTL.creditDetailsEntered(card.getType(), card.getNumber(), card.getCcv());
 	}
 	
 	@Test(expected = RuntimeException.class)
