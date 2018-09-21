@@ -60,7 +60,7 @@ public class CheckoutCTLTest {
 	
 	@Test(expected = RuntimeException.class)
 	public void testCreditDetailsEnteredIncorrectState() { 
-
+		checkoutCTL.creditDetailsEntered(card.getType(), card.getNumber(), card.getCcv());
 	}
 	
 }
