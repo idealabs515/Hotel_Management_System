@@ -97,13 +97,15 @@ public class CheckoutCTL {
 
 	
 	public void creditDetailsEntered(CreditCardType type, int number, int ccv) {
+		//check for correct state
 		if (state != State.CREDIT) {
 			throw new RuntimeException("Not in CREDIT state");
 		}
-		
+		//create a credit card instance with the given parameters
 		CreditCard creditCard = new CreditCard(type, number, ccv);
-		
+		//check for card authorization
 		if (CreditAuthorizer.getInstance().authorize(creditCard, total)) {
+			//if card is approved then checkout for the given room id
 			hotel.checkout(roomId);
 			checkoutUI.displayMessage("Credit card debited");
 			state = State.COMPLETED;
@@ -128,6 +130,7 @@ public class CheckoutCTL {
 
 	
 	public void setStateToRoom() {
+		//Setting state to ROOM for integration testing
 		checkoutUI.displayMessage("Setting state to ROOM for integration testing");
 		state = State.ROOM;
 	}
