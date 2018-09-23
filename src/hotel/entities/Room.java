@@ -58,7 +58,8 @@ public class Room {
 		return state == State.READY;
 	}
 
-
+//Implemented this method, creating a new booking object and passing the values which have been received as an
+//argument in the method. adding booking in bookings list and returning the newly created booking object.
 	public Booking book(Guest guest, Date arrivalDate, int stayLength, int numberOfOccupants, CreditCard creditCard) {
 		Booking newBooking = new Booking(guest, this, arrivalDate, stayLength, numberOfOccupants, creditCard);
 		bookings.add(newBooking);
@@ -66,7 +67,8 @@ public class Room {
 			
 	}
 
-
+//Implemented this method, checks if state is not ready then throws the runtime exception
+//if its ready then changes state to OCCUPIED.
 	public void checkin() {
 		
 		if(!isReady()) {
@@ -78,7 +80,8 @@ public class Room {
 		}
 	}
 
-
+//Implemented this method, takes booking object as an argument and checks if state is ready throws 
+//an exception otherwise removes the booking from booking list and changes state to READY.
 	public void checkout(Booking booking) {
 		if(isReady()) {
 			throw new RuntimeException("Room is not Ready yet. ");
