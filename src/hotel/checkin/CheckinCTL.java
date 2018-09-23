@@ -78,7 +78,8 @@ public class CheckinCTL {
 		}
 	}
 
-	
+//Implemented this method, when checkin is confirmed hotel.checkin is called with the confirmationNumber as argument
+//after that state should be COMPLETED and checkInUI State should also be COMPLETED else cancel 
 	public void checkInConfirmed(boolean confirmed) {
 		try {
 			if(confirmed) {
@@ -109,6 +110,7 @@ public class CheckinCTL {
 		checkInUI.displayMessage("Checking in completed");
 		
 	}
+//Implemented this public method to check if STATE is  COMPLETED or not.
 	public boolean isStateCompleted() {
 		return state == State.COMPLETED;
 	}
