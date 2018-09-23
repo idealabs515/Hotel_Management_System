@@ -1,5 +1,7 @@
 package hotel.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,6 +12,7 @@ import org.junit.Test;
 import hotel.checkout.CheckoutCTL;
 import hotel.credit.CreditCard;
 import hotel.credit.CreditCardType;
+import hotel.entities.Booking;
 import hotel.entities.Guest;
 import hotel.entities.Hotel;
 import hotel.entities.Room;
@@ -62,6 +65,18 @@ public class CheckoutCTLTest {
 		checkoutCTL.chargesAccepted(true);
 		//enter the credit card details
 		checkoutCTL.creditDetailsEntered(card.getType(), card.getNumber(), card.getCcv());
+		
+		//Check the state of booking
+		Booking booking = hotel.findBookingByConfirmationNumber(confirmationNumber);
+		assertEquals(booking.isCheckedOut(), true);
+		
+		//Check the state of room
+		assertEquals(room.isReady(), true);
+		
+		//Check if the booking exists in active bookings
+		boolean bookingActive = (hotel.findActiveBookingByRoomId(room.getId()) != null);
+		assertEquals(bookingActive, false);
+
 	}
 	
 	@Test(expected = RuntimeException.class)
