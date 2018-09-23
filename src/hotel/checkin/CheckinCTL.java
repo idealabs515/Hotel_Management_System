@@ -107,6 +107,10 @@ public class CheckinCTL {
 	
 	public void completed() {
 		checkInUI.displayMessage("Checking in completed");
+		
+	}
+	public boolean isStateCompleted() {
+		return state == State.COMPLETED;
 	}
 
 }
