@@ -1,5 +1,9 @@
 package hotel.testcases;
-
+/**
+ * The following JUnit testing is used to test a specific method which is independent and unit tested.
+ * @author  ChittyVaishnav
+ * @studentID 11639078
+ */
 import static org.junit.Assert.*;
 
 import java.util.Date;
@@ -16,22 +20,31 @@ import hotel.entities.RoomType;
 import hotel.entities.ServiceCharge;
 import hotel.entities.ServiceType;
 
+//The class test the functionality of add service charge
 public class BookingAddServiceChargeTestCase {
 
 	@Test
 	public void test() {
-		Room r1 = new Room(101,RoomType.SINGLE);
-		ServiceCharge sc = new ServiceCharge(ServiceType.ROOM_SERVICE,1000.50);
-		Booking booking = new Booking(new Guest("Vaishnav Reddy","9 Gooble Street",789328990), r1, new Date(), 2, 1, new CreditCard(CreditCardType.VISA,10001,543));
-		booking.checkIn();
-		booking.addServiceCharge(ServiceType.ROOM_SERVICE, 1000.50);
-		List<ServiceCharge> l1 = booking.getCharges();
+		//Creating all the mock objects needed for testing
+				Guest newGuest = new Guest("Vaishnav Reddy","9 Gooble Street",789328990);
+				Room newRoom = new Room(101,RoomType.SINGLE);
+				ServiceCharge newServiceCharge = new ServiceCharge(ServiceType.ROOM_SERVICE, 1000.50);
+				Date currentDate = new Date();
+				CreditCard cardCredentials = new CreditCard(CreditCardType.VISA,10001,543);
+				Booking newBooking = new Booking(newGuest, newRoom, currentDate, 1, 1, cardCredentials);
+		//Calling the method that need to be tested
+				newBooking.checkIn();
+		newBooking.addServiceCharge(ServiceType.ROOM_SERVICE, 1000.50);
+		//Calling the list to check the contents in the list
+		List<ServiceCharge> l1 = newBooking.getCharges();
+		//Only single object added so checking for the single object in a loop.
 		for(ServiceCharge s:l1)
 		{
-			assertEquals(sc.getType(),s.getType());
-			assertEquals(true,s.getCost()==sc.getCost());
+			assertEquals(newServiceCharge.getType(),s.getType());
+			assertEquals(true,s.getCost()==newServiceCharge.getCost());
 			
 		}
 	}
 
 }
+
