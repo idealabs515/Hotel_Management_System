@@ -26,6 +26,7 @@ public class CheckoutCTLTest {
 	
 	@Before 
     public void setUp() throws Exception {
+		//create prerequisite components 
 		hotel = new Hotel();
 		hotel.addRoom(RoomType.SINGLE, 101);
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -40,6 +41,7 @@ public class CheckoutCTLTest {
 	
 	@After 
     public void tearDown() throws Exception {
+		//remove references for the created global objects
 		card = null;
 		guest = null;
 		room = null;
@@ -48,18 +50,23 @@ public class CheckoutCTLTest {
 	}
 	
 	@Test 
-    public void testCreditDetailsEntered() throws Exception { 
+    public void testCreditDetailsEntered() throws Exception {
+		//change state to room to prevent user input
 		checkoutCTL.setStateToRoom();
+		//create a booking and checkin before testing creditDetailsEntered method
 		long confirmationNumber = hotel.book(room, guest, date, stayLength, 1, card);
 		hotel.checkin(confirmationNumber);
+		//give the room id of the booking above
 		checkoutCTL.roomIdEntered(room.getId());
+		//accept the charges to continue testing
 		checkoutCTL.chargesAccepted(true);
-		
+		//enter the credit card details
 		checkoutCTL.creditDetailsEntered(card.getType(), card.getNumber(), card.getCcv());
 	}
 	
 	@Test(expected = RuntimeException.class)
 	public void testCreditDetailsEnteredIncorrectState() { 
+		//check for the state in control class
 		checkoutCTL.creditDetailsEntered(card.getType(), card.getNumber(), card.getCcv());
 	}
 	
